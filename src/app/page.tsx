@@ -1,5 +1,6 @@
 "use client";
 
+import "@/app/page.css";
 import { useEffect, useState } from "react";
 import { getFilteredAdvocates } from "@/app/utils";
 import type { Advocate } from "@/app/types";
@@ -29,10 +30,9 @@ export default function Home() {
 
   return (
     <ErrorBoundary>
-      <main style={{ margin: "24px" }}>
+      <main>
         <h1>Solace Advocates</h1>
 
-        <p>Search</p>
         <input placeholder="Search for an advocate..." onChange={onChange} />
 
         <table>
@@ -56,7 +56,7 @@ export default function Home() {
                   <td>{advocate.city}</td>
                   <td>{advocate.degree}</td>
                   <td>{advocate.specialties.join(", ")}</td>
-                  <td>{advocate.yearsOfExperience}</td>
+                  <td className="experience">{advocate.yearsOfExperience}</td>
                   <td>{advocate.phoneNumber}</td>
                 </tr>
               );
