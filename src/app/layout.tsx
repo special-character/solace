@@ -16,10 +16,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ErrorBoundary>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
-      </html>
-    </ErrorBoundary>
+    <html lang="en">
+      <body className={inter.className}>{children}</body>
+    </html>
   );
 }
