@@ -7,9 +7,8 @@ export const getFilteredAdvocates = (
   searchTerm: string
 ) =>
   advocates.filter((advocate) => {
-    const normalizedSearchTerm = searchTerm.toLowerCase().trim();
-
     const fieldMatchesSearchTerm = (field: string) => {
+      const normalizedSearchTerm = searchTerm.toLowerCase().trim();
       const normalizedField = field.toLowerCase().trim();
       return normalizedField.includes(normalizedSearchTerm);
     };
