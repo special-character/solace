@@ -29,7 +29,7 @@ export default function Home() {
   const filteredAdvocates = getFilteredAdvocates(advocates, searchTerm);
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundary fallback={<h1>Something went wrong</h1>}>
       <main>
         <h1>Solace Advocates</h1>
 
