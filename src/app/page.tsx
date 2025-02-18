@@ -6,27 +6,30 @@ import { getFilteredAdvocates } from "@/app/utils";
 import type { Advocate } from "@/app/types";
 import ErrorBoundary from "@/app/components/ErrorBoundary";
 
+const fetchAdvocates = async (searchTerm: string) => {
+  const response = await fetch(`/api/advocates?searchTerm=${searchTerm}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  const jsonResponse = (await response.json()) as { data: Advocate[] };
+
+  return jsonResponse.data;
+};
+
 export default function Home() {
   const [advocates, setAdvocates] = useState<Advocate[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  useEffect(() => {
-    const fetchAdvocates = async () => {
-      const response = await fetch("/api/advocates");
-      const jsonResponse = (await response.json()) as { data: Advocate[] };
-      setAdvocates(jsonResponse.data);
-    };
-
-    fetchAdvocates();
-  }, []);
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchTerm = e.target.value;
     setSearchTerm(searchTerm);
-  };
 
-  // Don't keep this in state, it is computed based on the search term
-  const filteredAdvocates = getFilteredAdvocates(advocates, searchTerm);
+    const advocates = await fetchAdvocates(searchTerm);
+    setAdvocates(advocates);
+  };
 
   return (
     <ErrorBoundary fallback={<h1>Something went wrong</h1>}>
@@ -48,7 +51,7 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            {filteredAdvocates.map((advocate) => {
+            {advocates.map((advocate) => {
               return (
                 <tr key={advocate.id}>
                   <td>{advocate.firstName}</td>
